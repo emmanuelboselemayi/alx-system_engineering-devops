@@ -1,21 +1,18 @@
 #!/usr/bin/python3
-""" Exporting csv files"""
-import json
 import requests
-import sys
 
 
 def number_of_subscribers(subreddit):
-    """Read reddit API and return number subscribers"""
-    headers = {'user-agent': 'Mozilla/5.0'}
-    url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
-    client = requests.session()
-    client.headers = headers
-    r = client.get(url, allow_redirects=False)
-    if r.status_code == 200:
-        return 'OK'
-    else:
-        return ''
+    """Queries the Reddit API and returns the number of subscribers for a given subreddit."""
+    headers = {'User-Agent': 'Mozilla/5.0'}
+    url = f'https://www.reddit.com/r/{subreddit}/about.json'
+    response = requests.get(url, headers=headers, allow_redirects=False)
+
+    if response.status_code == 200:
+        data = response.json().get('data')
+        if data:
+            return data.get('subscribers', 0)
+    return 0
 
 
 # Example usage:
