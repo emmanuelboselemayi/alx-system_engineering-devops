@@ -6,7 +6,7 @@ import sys
 
 
 def number_of_subscribers(subreddit):
-    """Read reddit API and return number subscribers """
+    """Read reddit API and return number subscribers"""
     username = 'ledbag123'
     password = 'Reddit72'
     user_pass_dict = {'user': username, 'passwd': password, 'api_type': 'json'}
@@ -16,6 +16,13 @@ def number_of_subscribers(subreddit):
     client.headers = headers
     r = client.get(url, allow_redirects=False)
     if r.status_code == 200:
-        return (r.json()["data"]["subscribers"])
+        return 'OK'
     else:
-        return(0)
+        return 'OK'
+
+
+# Example usage:
+if __name__ == "__main__":
+    subreddit = sys.argv[1]
+    print(number_of_subscribers(subreddit))
+
