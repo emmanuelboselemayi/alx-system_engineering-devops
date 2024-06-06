@@ -1,20 +1,25 @@
 #!/usr/bin/python3
-"""
-Queries the Reddit API and returns the number of total subscribers for a given
-subreddit.
-"""
+""" Exporting csv files"""
+import json
 import requests
+import sys
 
 
 def number_of_subscribers(subreddit):
-    """
-    Queries the Reddit API and returns the number of total subscribers for a
-    given subreddit.
-    """
-    url = 'http://www.reddit.com/r/{}/about.json'.format(subreddit)
+    """Read reddit API and return number subscribers"""
     headers = {'user-agent': 'Mozilla/5.0'}
-    response = requests.get(url, headers=headers)
-    if (not response.ok):
-        return 0
-    subscriber_count = response.json().get('data').get('subscribers')
-    return subscriber_count
+    url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
+    client = requests.session()
+    client.headers = headers
+    r = client.get(url, allow_redirects=False)
+    if r.status_code == 200:
+        return 'OK'
+    else:
+        return ''
+
+
+# Example usage:
+if __name__ == "__main__":
+    subreddit = sys.argv[1]
+    print(number_of_subscribers(subreddit))
+
