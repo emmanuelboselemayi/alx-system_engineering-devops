@@ -1,8 +1,7 @@
-k 0. Strace is your friend: repair LAMP stack server running wordpress
+# fixes bad "phpp" extensions to "php" in "wp-settings.php"
 
-file { '/var/www/html/wp-settings.php' :
-  ensure  => file,
+
+exec{'fix-wordpress':
+  command => 'sed -i s/phpp/php/g /var/www/html/wp-settings.php',
+  path    => '/usr/local/bin/:/bin/'
 }
--> exec { 'replace reference to /class-wp-locale.phpp':
-  path    => '/usr/bin:/usr/sbin:/bin',
-  command => 'sed -i "s|/class-wp-locale.phpp|/class-wp-locale.php|" /var/www/html/wp-settings.php',
